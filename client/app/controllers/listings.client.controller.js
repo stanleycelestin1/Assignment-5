@@ -13,7 +13,23 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         $scope.error = 'Unable to retrieve listings!\n' + error;
       });
     };
-
+    $scope.map = {
+      center: {
+        latitude: 40.1451,
+        longitude: -99.6680
+      },
+      zoom: 4,
+      bounds: {
+        northeast: {
+          latitude: 45.1451,
+          longitude: -80.6680
+        },
+        southwest: {
+          latitude: 30.000,
+          longitude: -120.6680
+        }
+      }
+    }
     $scope.findOne = function() {
       debugger;
       $scope.loading = true;
@@ -79,6 +95,17 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         successfully finished, navigate back to the 'listing.list' state using $state.go(). If an error 
         occurs, pass it to $scope.error. 
        */
+       if (isValid){
+        var id = $stateParams.listingId;
+        var listing  = $stateParams.listin;
+        Listings.update(id,listing)
+                .then(function(response) {
+                  $state.go('listings.list');
+                }, function(error){
+                  $scope.error = 'Unable to update listing!\n' + error;
+                });
+
+       }
     };
 
     $scope.remove = function() {
@@ -86,6 +113,13 @@ angular.module('listings').controller('ListingsController', ['$scope', '$locatio
         Implement the remove function. If the removal is successful, navigate back to 'listing.list'. Otherwise, 
         display the error. 
        */
+       var id = $stateParams.listingId;
+       Listings.delete(id)
+               .then(function(response) {
+                  $state.go('listings.list');
+                }, function(error){
+                  $scope.error = 'Unable to delete listing!\n' + error;
+                });
     };
 
     /* Bind the success message to the scope if it exists as part of the current state */

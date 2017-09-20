@@ -8,3 +8,15 @@
     https://angular-ui.github.io/angular-google-maps/#!/api/markers
     https://angular-ui.github.io/angular-google-maps/#!/api/windows
   -->
+
+<div class="row" ng-controller="ListingsController">
+  <div class="col-md-offset-1 col-md-10 ">
+    <h1>Map to be added</h1>
+  </div>
+</div>
+<div id="map_canvas" ng-controller="ListingsController">
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+        <ui-gmap-markers ng-repeat="listing in listings" center='listings.coordinates' icon="'icon'"></ui-gmap-markers>
+    </ui-gmap-google-map>
+</div>
+
